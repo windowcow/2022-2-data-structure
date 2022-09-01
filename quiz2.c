@@ -34,7 +34,7 @@ int main(void)
 
     if (list[2] >= list[1])
     {
-        printf("<정렬 후> : %d, %d, %d", list[0], list[1], list[2]);
+        printf("<정렬 후1> : %d, %d, %d", list[0], list[1], list[2]);
         return 0;
     }
 
@@ -43,45 +43,17 @@ int main(void)
         int tmp = list[2];
         list[2] = list[1];
         list[1] = tmp;
-        printf("<정렬 후> : %d, %d, %d", list[0], list[1], list[2]);
+        printf("<정렬 후2> : %d, %d, %d", list[0], list[1], list[2]);
         return 0;
     }
     if (list[2] < list[0])
     {
-        int tmp1 = list[0];
-        int tmp2 = list[1];
+        int tmp0 = list[0];
+        int tmp1 = list[1];
         list[0] = list[2];
-        list[1] = list[tmp1];
-        list[2] = list[tmp2];
-        printf("<정렬 후> : %d, %d, %d", list[0], list[1], list[2]);
-        return 0;
-    }
-
-    if (z >= x)
-    {
-        // [y, x, z]
-        list[2] = z;
-        printf("<정렬 후> : %d, %d, %d", list[0], list[1], list[2]);
-        return 0;
-    }
-
-    if (z >= y)
-    {
-        list[2] = x;
-        list[1] = z;
-        list[0] = y;
-
-        printf("<정렬 후> : %d, %d, %d", list[0], list[1], list[2]);
-        return 0;
-    }
-
-    if (y >= z)
-    {
-        list[2] = x;
-        list[1] = y;
-        list[0] = z;
-
-        printf("<정렬 후> : %d, %d, %d", list[0], list[1], list[2]);
+        list[1] = tmp0;
+        list[2] = tmp1;
+        printf("<정렬 후3> : %d, %d, %d", list[0], list[1], list[2]);
         return 0;
     }
 
