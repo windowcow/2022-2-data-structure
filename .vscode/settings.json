@@ -1,5 +1,9 @@
 {
     "cSpell.words": [
         "arraysize"
-    ]
+    ],
+    "files.associations": {
+        "*.rmd": "markdown",
+        "stdlib.h": "c"
+    }
 }
