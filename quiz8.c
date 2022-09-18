@@ -1,43 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
+startingPos[0] = 1;
 
-void stringremove(char *, int, int);
-
-int main(void)
+for (i = 1; i < numCols; i++)
 {
-    char string[] = "Hello, world!";
-    stringremove(string, 3, 33);
-}
-
-void stringremove(char *s, int i, int j)
-{
-    // lens means a length of a string s
-    int lens = 0;
-
-    while (s[lens] != '\0')
+    for (i = 1; i < numCols; i++)
     {
-        lens++;
-    }
-
-    if (i + j - 1 <= lens - 1)
-    {
-        for (int k = i; k <= lens - i - j + 1; k++)
+        int sum = 0;
+        if (a[i - 1].col == i)
         {
-            s[k] = s[k + j];
+            sum++;
         }
-        for (int k = lens - i - j + 1; k <= lens; k++)
-        {
-            s[k] = '\0';
-        }
+        startingPos[i] = startingPos[i - 1] + sum;
     }
-    else
-    {
-        s[i] = '\0';
-        for (int k = i + 1; k <= lens; k++)
-        {
-            s[k] = '\0';
-        }
-    }
-
-    printf("\nThe result : %s\n", s);
 }
