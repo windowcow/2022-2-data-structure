@@ -4,6 +4,27 @@
     ],
     "files.associations": {
         "*.rmd": "markdown",
-        "stdlib.h": "c"
-    }
+        "stdlib.h": "c",
+        "__bit_reference": "c",
+        "__node_handle": "c",
+        "bitset": "c",
+        "chrono": "c",
+        "deque": "c",
+        "__memory": "c",
+        "limits": "c",
+        "optional": "c",
+        "random": "c",
+        "ratio": "c",
+        "system_error": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "vector": "c",
+        "array": "c",
+        "functional": "c",
+        "utility": "c",
+        "variant": "c",
+        "string": "c",
+        "iosfwd": "c"
+    },
+    "C_Cpp.errorSquiggles": "Disabled"
 }
