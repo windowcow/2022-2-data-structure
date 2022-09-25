@@ -24,7 +24,8 @@
         "utility": "c",
         "variant": "c",
         "string": "c",
-        "iosfwd": "c"
+        "iosfwd": "c",
+        "ios": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }
