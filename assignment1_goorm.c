@@ -7,30 +7,16 @@ int Strstr(char *str, char *pat);
 int Nfind(char *str, char *pat);
 int FastPatternMatching(char *str, char *pat);
 int *fail(char *pat);
-char *strGenerator(unsigned int sizeOfString, unsigned int seed);
 
 int main()
 {
-    printf("%lu\n\n", sizeof(char));
-
-    int sizeOfString;
-    int sizeOfPattern;
-    clock_t
-
-        printf("What is the size of the target string in bytes? \n");
-    scanf("%d", &sizeOfString);
-    printf("What is the size of the pattern in bytes? \n");
-    scanf("%d", &sizeOfPattern);
-
-    char *str = strGenerator(sizeOfString, (unsigned int)time(NULL) + 1);
-    char *pat = strGenerator(sizeOfPattern, (unsigned int)time(NULL));
-
-    printf("Generated string: %s\n", str);
-    printf("Generated pattern: %s\n", pat);
+    char *str = malloc(1000000);
+    scanf("%s", str);
+    char *pat = malloc(1000000);
+    scanf("%s", pat);
 
     int result1 = Strstr(str, pat);
     printf("%d\n", result1);
-
     int result2 = Nfind(str, pat);
     printf("%d\n", result2);
     int result3 = FastPatternMatching(str, pat);
@@ -39,7 +25,6 @@ int main()
 
 int Strstr(char *str, char *pat)
 {
-
     int strSize = strlen(str);
     int patSize = strlen(pat);
 
@@ -157,23 +142,4 @@ int *fail(char *pat)
         }
     }
     return failure;
-}
-
-char *strGenerator(unsigned int sizeOfString, unsigned int seed)
-{
-    srand(seed);
-    // a ... z : 97 ... 122 -> 26개
-    // A ... Z : 65 ... 90 -> 26개
-    int capitalFactor;
-    int alphaFactor;
-
-    char *str = malloc(sizeOfString * sizeof(char));
-
-    for (int i = 0; i < sizeOfString; i++)
-    {
-        capitalFactor = rand() % 2 ? 65 : 97; // capitalFactor: 65 or 97
-        alphaFactor = rand() % 26;            // alphaFactor: 0 ... 25
-        str[i] = capitalFactor + alphaFactor;
-    }
-    return str;
 }
