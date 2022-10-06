@@ -34,7 +34,6 @@ int main()
     end = clock();
     spentTimeStrstr = ((double)(end - start)) / CLOCKS_PER_SEC;
 
-
     start = clock();
     int result2 = Nfind(str, pat);
     end = clock();
@@ -44,8 +43,7 @@ int main()
     int result3 = FastPatternMatching(str, pat);
     end = clock();
     spentTimeFastPatternMatching = ((double)(end - start)) / CLOCKS_PER_SEC;
-    
-    
+
     printf("The result of Strstr is: %d and it took %lf seconds\n", result1, spentTimeStrstr);
     printf("The result of Nfind is: %d and it took %lf seconds\n", result2, spentTimeNfind);
     printf("The result of FastPatternMatching is: %d and it took %lf seconds\n", result3, spentTimeFastPatternMatching);
