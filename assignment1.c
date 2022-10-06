@@ -15,9 +15,10 @@ int main()
 
     int sizeOfString;
     int sizeOfPattern;
-    clock_t
+    clock_t start, end;
+    double spentTimeStrstr, spentTimeNfind, spentTimeFastPatternMatching;
 
-        printf("What is the size of the target string in bytes? \n");
+    printf("What is the size of the target string in bytes? \n");
     scanf("%d", &sizeOfString);
     printf("What is the size of the pattern in bytes? \n");
     scanf("%d", &sizeOfPattern);
@@ -25,16 +26,33 @@ int main()
     char *str = strGenerator(sizeOfString, (unsigned int)time(NULL) + 1);
     char *pat = strGenerator(sizeOfPattern, (unsigned int)time(NULL));
 
-    printf("Generated string: %s\n", str);
-    printf("Generated pattern: %s\n", pat);
+    // printf("Generated string: %s\n", str);
+    // printf("Generated pattern: %s\n", pat);
 
+    start = clock();
     int result1 = Strstr(str, pat);
-    printf("%d\n", result1);
+    end = clock();
+    spentTimeStrstr = ((double)(end - start)) / CLOCKS_PER_SEC;
 
+
+    start = clock();
     int result2 = Nfind(str, pat);
-    printf("%d\n", result2);
+    end = clock();
+    spentTimeNfind = ((double)(end - start)) / CLOCKS_PER_SEC;
+
+    start = clock();
     int result3 = FastPatternMatching(str, pat);
-    printf("%d\n", result3);
+    end = clock();
+    spentTimeFastPatternMatching = ((double)(end - start)) / CLOCKS_PER_SEC;
+    
+    
+    printf("The result of Strstr is: %d and it took %lf seconds\n", result1, spentTimeStrstr);
+    printf("The result of Nfind is: %d and it took %lf seconds\n", result2, spentTimeNfind);
+    printf("The result of FastPatternMatching is: %d and it took %lf seconds\n", result3, spentTimeFastPatternMatching);
+
+    // printf("%d\n", result1);
+    // printf("%d\n", result2);
+    // printf("%d\n", result3);
 }
 
 int Strstr(char *str, char *pat)
