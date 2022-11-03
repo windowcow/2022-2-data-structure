@@ -25,7 +25,8 @@
         "variant": "c",
         "string": "c",
         "iosfwd": "c",
-        "ios": "c"
+        "ios": "c",
+        "string_view": "c"
     },
     "C_Cpp.errorSquiggles": "Disabled"
 }

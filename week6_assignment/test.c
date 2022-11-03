@@ -213,8 +213,9 @@ char *strGenerator(unsigned int sizeOfString, unsigned int seed)
 
     for (int i = 0; i < sizeOfString; i++)
     {
-        capitalFactor = rand() % 2 ? 65 : 97; // capitalFactor: 65 or 97
-        alphaFactor = rand() % 26;            // alphaFactor: 0 ... 25
+        // capitalFactor = rand() % 2 ? 65 : 97; // capitalFactor: 65 or 97
+        capitalFactor = 65;
+        alphaFactor = rand() % 5; // alphaFactor: 0 ... 25
         str[i] = capitalFactor + alphaFactor;
     }
     return str;
