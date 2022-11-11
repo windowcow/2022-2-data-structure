@@ -194,7 +194,7 @@ void treePrinter(nodePointer ptr)
     printf("/");
 }
 
-int tree_height(nodePointer root)
+int treeHeight(nodePointer root)
 {
     if (root == NULL)
     {
@@ -202,8 +202,8 @@ int tree_height(nodePointer root)
     }
     else
     {
-        int left_height = tree_height(root->leftChild);
-        int right_height = tree_height(root->rightChild);
+        int left_height = treeHeight(root->leftChild);
+        int right_height = treeHeight(root->rightChild);
 
         if (left_height > right_height)
         {
@@ -216,7 +216,7 @@ int tree_height(nodePointer root)
     }
 }
 
-int relativeColIndexOfRoot(int height)
+int relativeIndexOfRoot(int height)
 {
     if (height == 1)
     {
@@ -237,7 +237,7 @@ int relativeColIndexOfRoot(int height)
 
 char **makeEmptyCanvas(int height) // root의 height를 받는다.
 {
-    int mid = relativeColIndexOfRoot(height);
+    int mid = relativeIndexOfRoot(height);
 
     int canvasWidth = 2 * mid + 1; // 열의 수
     int canvasHeight = mid + 1;    // 행의 수
@@ -261,9 +261,9 @@ char **makeEmptyCanvas(int height) // root의 height를 받는다.
     return canvas;
 }
 
-void drawNode(char **canvas, int row, int col, nodePointer ptr)
+void drawSubtree(char **canvas, int row, int col, nodePointer ptr)
 {
-    int height = tree_height(ptr);
+    int height = treeHeight(ptr);
     int legsize;
     if (height == 1)
     {
@@ -275,7 +275,7 @@ void drawNode(char **canvas, int row, int col, nodePointer ptr)
     }
     else
     {
-        legsize = relativeColIndexOfRoot(height - 1);
+        legsize = relativeIndexOfRoot(height - 1);
     }
 
     // printf("legsize : %d\n", legsize);
@@ -299,7 +299,7 @@ void drawNode(char **canvas, int row, int col, nodePointer ptr)
 
             canvas[row + i][col - i] = '/';
         }
-        drawNode(canvas, row + legsize + 1, col - legsize - 1, ptr->leftChild);
+        drawSubtree(canvas, row + legsize + 1, col - legsize - 1, ptr->leftChild);
     }
     if (ptr->rightChild)
     {
@@ -308,7 +308,7 @@ void drawNode(char **canvas, int row, int col, nodePointer ptr)
 
             canvas[row + i][col + i] = '\\';
         }
-        drawNode(canvas, row + legsize + 1, col + legsize + 1, ptr->rightChild);
+        drawSubtree(canvas, row + legsize + 1, col + legsize + 1, ptr->rightChild);
     }
 }
 
@@ -320,23 +320,23 @@ int main()
     char *inorderArray;   // = (char *)malloc(sizeof(char) * 63);
     char *postorderArray; // = (char *)malloc(sizeof(char) * 63);
 
-    printf("inorder : ");
+    // printf("inorder : ");
     scanf("%[^\n]s", input1);
     inorderArray = parser(input1);
 
     // 버퍼 초기화
     getchar();
 
-    printf("postorder : ");
+    // printf("postorder : ");
     scanf("%[^\n]s", input2);
     postorderArray = parser(input2);
 
     nodePointer root = makeTree(inorderArray, postorderArray);
 
-    int rootHeight = tree_height(root);
-    int canvaswidth = 2 * relativeColIndexOfRoot(rootHeight) + 1;
-    int canvasheight = relativeColIndexOfRoot(rootHeight) + 1;
-    int rootColIndex = relativeColIndexOfRoot(rootHeight);
+    int rootHeight = treeHeight(root);
+    int canvaswidth = 2 * relativeIndexOfRoot(rootHeight) + 1;
+    int canvasheight = relativeIndexOfRoot(rootHeight) + 1;
+    int rootColIndex = relativeIndexOfRoot(rootHeight);
 
     // inorder(root);
     // printf("\n");
@@ -349,9 +349,8 @@ int main()
 
     char **canvas = makeEmptyCanvas(rootHeight);
 
-    drawNode(canvas, 0, rootColIndex, root);
+    drawSubtree(canvas, 0, rootColIndex, root);
 
-    printf("\n");
     for (int i = 0; i < canvasheight; i++)
     {
         for (int j = 0; j < canvaswidth; j++)
