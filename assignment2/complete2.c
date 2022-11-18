@@ -14,9 +14,6 @@ typedef struct node
 char *parser(char *inputString)
 {
     char *resultString = (char *)malloc(sizeof(char) * 63);
-    // char *inputString = (char *)malloc(sizeof(char) * 189);
-
-    // strcpy(inputString, input);
 
     for (int i = 0; i < 63; i++)
     {
@@ -35,25 +32,6 @@ char *parser(char *inputString)
     }
 
     return resultString;
-}
-
-int findIndex(char *inputString, char c)
-{
-    int stringLength = strlen(inputString);
-    int i = 0;
-    while (inputString[i] != c)
-    {
-        i++;
-    }
-
-    if (i == stringLength)
-    {
-        return -1;
-    }
-    else
-    {
-        return i;
-    }
 }
 
 nodePointer makeTree(char *inorder, char *postorder)
@@ -285,6 +263,7 @@ int main()
 
     int rootHeight = treeHeight(root);
     int rootRelativeIndex = relativeIndexOfRoot(rootHeight);
+
     int canvasWidth = 2 * rootRelativeIndex + 1;
     int canvasHeight = rootRelativeIndex + 1;
 
