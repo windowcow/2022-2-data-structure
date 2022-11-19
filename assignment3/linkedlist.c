@@ -8,19 +8,17 @@ linkedList에서는 차라리 우선순위 큰 순서대로 들어가게끔 만�
 
 */
 
-typedef struct linkedNode *headPointer;
-
 typedef struct data
 {
     int priority;
     char *c;
 } data;
 
-typedef struct linkedNode
+typedef struct node
 {
     data *data;
-    struct linkedNode *next;
-} linkedNode;
+    struct node *next;
+} node;
 
 char *randomStringGenerate(void)
 {
@@ -33,137 +31,93 @@ char *randomStringGenerate(void)
     return s;
 }
 
-data *makeNode(void)
+data *makeRandomData(void)
 {
-    data *n = malloc(sizeof(data));
-    n->priority = rand() % 1000;
-    printf("%d ", n->priority);
-    n->c = randomStringGenerate();
-    return n;
+    data *d = (data *)malloc(sizeof(data));
+
+    d->priority = rand() % 1000;
+    d->c = randomStringGenerate();
+
+    return d;
 }
 
-headPointer makeEmptyHeadPointer(void)
+node *makeLinkedNode(void)
 {
-    headPointer headpointer = (headPointer)malloc(sizeof(linkedNode));
-    headpointer->data = NULL;
-    headpointer->next = NULL;
+    node *linkedNodePointer = (node *)malloc(sizeof(node));
 
-    return headpointer;
+    linkedNodePointer->data = makeRandomData();
+    linkedNodePointer->next = NULL;
+
+    return linkedNodePointer;
 }
 
-// link to linked list
-void insertNodeToItsPriority(headPointer headpointer, linkedNode *insertedNodePointer)
+void insertNode(node **headPointer)
 {
-    linkedNode *tempNodePointer = (linkedNode *)malloc(sizeof(linkedNode));
-    *tempNodePointer = *headpointer; // 헤드를 받는다. (linkedNode로)
+    node *newNode = makeLinkedNode();
+    printf("%d ", newNode->data->priority);
+    node *temp = *headPointer;
 
-    printf("inserting %d\n", insertedNodePointer->data->priority);
-
-    // head가 없는 경우
-    if (headpointer->data == NULL)
+    if (*headPointer == NULL)
     {
-        *headpointer = *insertedNodePointer;
-        return;
+        *headPointer = newNode;
     }
-    // head가 있는 경우 넣어 준 애가 맨 앞에 위치할 경우는 따로 생각한다.
-    else if (headpointer->data->priority <= insertedNodePointer->data->priority)
-    {
-        insertedNodePointer->next = headpointer; // 헤드가됨
-
-        headpointer = insertedNodePointer;
-        return;
-    }
-    // 맨 앞에는 안들어가는 경우. 이 경우는 같은 코드로 반복이 가능하기에 이렇게함
     else
     {
+        *headPointer = newNode;
+        newNode->next = temp;
+    }
+}
 
-        while (tempNodePointer->data->priority > insertedNodePointer->data->priority)
+void deleteTopPriority(node **headPointer)
+{
+    node *temp = *headPointer;
+    node *temp2 = *headPointer;
+    node *tempMax = *headPointer;
+
+    if (*headPointer == NULL)
+    {
+    }
+    else
+    {
+        while (temp != NULL)
         {
-            // 마지막까지 간 경우
-            if (tempNodePointer->next == NULL)
+            if (temp->data->priority > tempMax->data->priority)
             {
-                tempNodePointer->next = insertedNodePointer;
-                return;
+                tempMax = temp;
             }
-            // 마지막까지 가지 않은 경우
-            else
-            {
-                tempNodePointer = tempNodePointer->next;
-            }
+            temp = temp->next;
         }
-        insertedNodePointer->next = tempNodePointer->next;
-        tempNodePointer->next = insertedNodePointer;
-        return;
+        if (tempMax == *headPointer)
+        {
+            *headPointer = (*headPointer)->next;
+        }
+        else
+        {
+            while (temp2->next != tempMax)
+            {
+                temp2 = temp2->next;
+            }
+            temp2->next = tempMax->next;
+        }
     }
-}
-
-// priority가 가장 큰 node를 지우는 함수 (끊고 연결해야함)
-void popBiggestPriority(headPointer headpointer)
-{
-    linkedNode *tempLinkedNodePointer = headpointer;
-
-    // 아무 것도 없는 경우
-    if (tempLinkedNodePointer->data == NULL)
-    {
-        return;
-    }
-    // 하나 있는 경우 linkedListPointer은 NULL을 가리킨다.
-    else if (tempLinkedNodePointer->next == NULL)
-    {
-        printf("%d ", tempLinkedNodePointer->data->priority);
-        headpointer = NULL;
-        return;
-    }
-    // 두 개 이상 있는 경우
-    else
-    {
-        printf("%d ", tempLinkedNodePointer->data->priority);
-        headpointer = tempLinkedNodePointer->next;
-        return;
-    }
-    // 다음이 없는 경우에는 최고를 반환하면 된다.
+    printf("%d ", tempMax->data->priority);
 }
 
 int main(void)
 {
     srand(time(NULL));
-    double insertTime, popTime, totalTime;
+    node *head = NULL;
 
-    clock_t start, end;
-
-    headPointer headpointer = makeEmptyHeadPointer();
-
-    start = clock();
-
+    printf("넣은 순서: \n");
     for (int i = 0; i < 100; i++)
     {
-        data *n = makeNode();
-        linkedNode ln = {n, NULL};
-        insertNodeToItsPriority(headpointer, &ln);
+        insertNode(&head);
     }
-    end = clock();
-
+    printf("\n삭제 된 순서: \n");
     for (int i = 0; i < 100; i++)
     {
-        printf("%d ", headpointer->data->priority);
+        deleteTopPriority(&head);
     }
-
-    insertTime = (double)(end - start);
-    printf("Insert에 소요 시간: %lfms\n", insertTime);
-
-    start = clock();
-    for (int i = 0; i < 100; i++)
-    {
-        // node *n = makeNode(); // 같은 조건을 위해서 넣었습니다.
-        popBiggestPriority(headpointer);
-    }
-
-    end = clock();
-    popTime = (double)(end - start);
-    printf("\nPop에 소요 시간: %lfms\n", popTime);
-
-    totalTime = insertTime + popTime;
-    printf("전체 소요 시간!: %lfms", totalTime);
 
     return 0;
 }
