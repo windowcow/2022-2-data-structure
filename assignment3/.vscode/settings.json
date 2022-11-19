@@ -1,3 +1,11 @@
 {
-    "cSpell.words": ["linkedlist"]
+    "cSpell.words": ["headpointer", "linkedlist"],
+    "files.associations": {
+        "*.rmd": "markdown",
+        "__tuple": "c",
+        "array": "c",
+        "__hash_table": "c",
+        "__node_handle": "c",
+        "unordered_map": "c"
+    }
 }

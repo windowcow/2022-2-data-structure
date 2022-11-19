@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <time.h>
 
-typedef struct node
+typedef struct data
 {
     int priority;
     char *c;
-} node;
+} data;
 
 char *randomStringGenerate(void)
 {
@@ -19,23 +19,23 @@ char *randomStringGenerate(void)
     return s;
 }
 
-node *makeNode(void)
+data *makeNode(void)
 {
-    node *n = malloc(sizeof(node));
+    data *n = malloc(sizeof(data));
     n->priority = rand() % 1000;
     printf("%d ", n->priority);
     n->c = randomStringGenerate();
     return n;
 }
 
-node **makeLinkedList(void)
+data **makeLinkedList(void)
 {
-    node **array = (node **)malloc(100 * sizeof(node *));
+    data **array = (data **)malloc(100 * sizeof(data *));
 
     return array;
 }
 
-void insertNodeToArray(node **array, node *n)
+void insertNodeToArray(data **array, data *n)
 {
     int i = 0;
     while (array[i] != NULL)
@@ -45,7 +45,7 @@ void insertNodeToArray(node **array, node *n)
     array[i] = n;
 }
 
-void popBiggestPriority(node **array)
+void popBiggestPriority(data **array)
 {
     int maxIndex;
     int maxIndexNotNulflag = 0;
@@ -81,13 +81,13 @@ int main(void)
 
     clock_t start, end;
 
-    node **array = makeLinkedList();
+    data **array = makeLinkedList();
 
     start = clock();
     for (int i = 0; i < 100; i++)
     {
 
-        node *n = makeNode();
+        data *n = makeNode();
         insertNodeToArray(array, n);
     }
     end = clock();
@@ -98,7 +98,7 @@ int main(void)
     start = clock();
     for (int i = 0; i < 100; i++)
     {
-        node *n = makeNode(); // 같은 조건을 위해서 넣었습니다.
+        data *n = makeNode(); // 같은 조건을 위해서 넣었습니다.
         popBiggestPriority(array);
     }
 
